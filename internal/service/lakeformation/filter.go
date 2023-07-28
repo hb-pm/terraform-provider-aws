@@ -50,6 +50,10 @@ func FilterPermissions(input *lakeformation.ListPermissionsInput, tableType stri
 		return FilterTablePermissions(input.Principal.DataLakePrincipalIdentifier, input.Resource.Table, allPermissions)
 	}
 
+	if input.Resource.DataCellsFilter != nil {
+		return FilterDataCellsFilterPermissions(input.Principal.DataLakePrincipalIdentifier, allPermissions)
+	}
+
 	return nil
 }
 
@@ -218,4 +222,20 @@ func FilterLFTagPolicyPermissions(principal *string, allPermissions []*lakeforma
 	}
 
 	return cleanPermissions
+}
+
+func FilterDataCellsFilterPermissions(principal *string, allPermissions []*lakeformation.PrincipalResourcePermissions) []*lakeformation.PrincipalResourcePermissions {
+	var cleanPermissons []*lakeformation.PrincipalResourcePermissions
+
+	for _, perm := range allPermissions {
+		if aws.StringValue(principal) != aws.StringValue(perm.Principal.DataLakePrincipalIdentifier) {
+			continue
+		}
+
+		if perm.Resource.DataCellsFilter != nil {
+			cleanPermissons = append(cleanPermissons, perm)
+		}
+	}
+
+	return cleanPermissons
 }

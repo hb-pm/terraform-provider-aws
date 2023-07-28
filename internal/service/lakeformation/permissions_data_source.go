@@ -243,6 +243,34 @@ func DataSourcePermissions() *schema.Resource {
 					},
 				},
 			},
+			"data_cells_filter": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"catalog_id": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							Computed:     true,
+							ValidateFunc: verify.ValidAccountID,
+						},
+						"database_name": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"table_name": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"name": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -293,6 +321,10 @@ func dataSourcePermissionsRead(ctx context.Context, d *schema.ResourceData, meta
 		// can't ListPermissions for TableWithColumns, so use Table instead
 		input.Resource.Table = ExpandTableWithColumnsResourceAsTable(v.([]interface{})[0].(map[string]interface{}))
 		tableType = TableTypeTableWithColumns
+	}
+
+	if v, ok := d.GetOk("data_cells_filter"); ok && len(v.([]interface{})) > 0 && v.([]interface{})[0] != nil {
+		input.Resource.DataCellsFilter = ExpandDataCellsFilterResource(v.([]interface{})[0].(map[string]interface{}))
 	}
 
 	columnNames := make([]*string, 0)
@@ -374,6 +406,14 @@ func dataSourcePermissionsRead(ctx context.Context, d *schema.ResourceData, meta
 		}
 	} else {
 		d.Set("lf_tag_policy", nil)
+	}
+
+	if cleanPermissions[0].Resource.DataCellsFilter != nil {
+		if err := d.Set("data_cells_filter", []interface{}{flattenDataCellsFilterResource(cleanPermissions[0].Resource.DataCellsFilter)}); err != nil {
+			return sdkdiag.AppendErrorf(diags, "setting Data Cells Filter policy: %s", err)
+		}
+	} else {
+		d.Set("data_cells_filter", nil)
 	}
 
 	tableSet := false
