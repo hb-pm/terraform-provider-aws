@@ -13,7 +13,7 @@ on:
 
 jobs:
   markdown-link-check:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       UV_THREADPOOL_SIZE: 128
     steps:
@@ -28,14 +28,14 @@ jobs:
           base-branch: "main"
           check-modified-files-only: "yes"
   markdown-lint:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
       - uses: avto-dev/markdown-lint@04d43ee9191307b50935a753da3b775ab695eceb
         with:
           args: 'docs'
   misspell:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
       - uses: actions/setup-go@fac708d6674e30b6ba41289acaab6d4b75aa0753

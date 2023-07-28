@@ -10,7 +10,7 @@ jobs:
   slack-notification:
     name: Slack Notifier
     if: github.event.label.name == 'regression'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Send Slack Notification
         uses: slackapi/slack-github-action@e28cf165c92ffef168d23c5c9000cffc8a25e117
@@ -46,7 +46,7 @@ jobs:
     env:
       DESTINATION_COLUMN_ID: 'MDEzOlByb2plY3RDb2x1bW4xMTUxMzUyOQ=='
       GH_TOKEN: ${{ secrets.ORGSCOPED_GITHUB_TOKEN }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: 'Add Regression Issues to To Do column'
         if: github.event_name == 'issues'

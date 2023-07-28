@@ -13,7 +13,7 @@ on:
 jobs:
   compile_skaff:
     name: Compile skaff
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
         with:

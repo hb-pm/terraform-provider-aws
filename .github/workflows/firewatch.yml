@@ -6,7 +6,7 @@ name: Firewatch
 jobs:
   FirewatchJob:
     if: github.repository_owner == 'hashicorp'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Firewatch
         uses: breathingdust/firewatch@d44ea4b76b7ed38b97cfe8b0388cfc249ef1c7f2

@@ -6,7 +6,7 @@ on:
 
 jobs:
   open-pr-stats:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: open-pr-stats
     if: github.repository_owner == 'hashicorp'
     steps:

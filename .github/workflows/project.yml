@@ -13,7 +13,7 @@ jobs:
 
   WorkingBoardReview:
     needs: community_check
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: 'Move team PRs to Review column'
         if: github.event.pull_request.draft == false && needs.community_check.outputs.maintainer == 'true'

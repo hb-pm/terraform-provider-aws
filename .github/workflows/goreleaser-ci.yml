@@ -19,7 +19,7 @@ on:
 
 jobs:
   changes:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       goreleaser: ${{ steps.filter.outputs.goreleaser }}
     steps:
@@ -35,7 +35,7 @@ jobs:
   check:
     needs: changes
     if: ${{ needs.changes.outputs.goreleaser == 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
       - uses: actions/setup-go@fac708d6674e30b6ba41289acaab6d4b75aa0753

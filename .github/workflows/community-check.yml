@@ -22,7 +22,7 @@ on:
 jobs:
   community_check:
     name: Check community lists for username
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       is_core_contributor: ${{ steps.determination.outputs.is_core_contributor }}
       is_maintainer: ${{ steps.determination.outputs.is_maintainer }}

@@ -17,7 +17,7 @@ jobs:
   changes:
     needs: community_check
     name: Filter Changes
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       changed: ${{ steps.filter.outputs.changed }}
     steps:
@@ -33,7 +33,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.changed == 'true'
     name: Comment
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Find Existing PR Comment
         id: prc

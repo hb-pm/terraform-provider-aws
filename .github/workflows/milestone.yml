@@ -11,7 +11,7 @@ permissions:
 jobs:
   Comment:
     name: 'Post-Release Comment'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: bflad/action-milestone-comment@v1
         with:
@@ -22,7 +22,7 @@ jobs:
 
   archive_and_unlabel:
     name: 'Archive Project Items & Remove Label on Milestone Closed'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       MILESTONE: ${{ github.event.milestone.number }}
     steps:

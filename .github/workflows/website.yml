@@ -18,7 +18,7 @@ on:
 
 jobs:
   markdown-link-check-a-h-markdown:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
       - uses: YakDriver/md-check-links@9044b7162323b91150cef35355e1a3514564aa82
@@ -34,7 +34,7 @@ jobs:
           check-modified-files-only: "no"
 
   markdown-link-check-i-z-markdown:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
       - uses: YakDriver/md-check-links@9044b7162323b91150cef35355e1a3514564aa82
@@ -50,7 +50,7 @@ jobs:
           check-modified-files-only: "no"
 
   markdown-link-check-md:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
       - uses: YakDriver/md-check-links@9044b7162323b91150cef35355e1a3514564aa82
@@ -65,7 +65,7 @@ jobs:
           check-modified-files-only: "yes"
 
   markdown-lint:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
       - uses: avto-dev/markdown-lint@04d43ee9191307b50935a753da3b775ab695eceb
@@ -73,7 +73,7 @@ jobs:
           args: "website/docs"
 
   misspell:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
       - uses: actions/setup-go@fac708d6674e30b6ba41289acaab6d4b75aa0753
@@ -89,7 +89,7 @@ jobs:
       - run: misspell -error -source text website/
 
   terrafmt:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
       - uses: actions/setup-go@fac708d6674e30b6ba41289acaab6d4b75aa0753
@@ -105,7 +105,7 @@ jobs:
       - run: terrafmt diff ./website --check --pattern '*.markdown'
 
   tflint:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
         with:

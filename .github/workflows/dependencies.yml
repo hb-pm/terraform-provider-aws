@@ -18,7 +18,7 @@ jobs:
   changes:
     needs: community_check
     name: Filter Changes
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       changed: ${{ steps.filter.outputs.changed }}
     steps:
@@ -36,7 +36,7 @@ jobs:
     needs: changes
     if: needs.changes.outputs.changed == 'true'
     name: Comment
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Find Existing PR Comment
         id: prc
@@ -68,7 +68,7 @@ jobs:
 
   go_mod:
     name: go mod
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
       - uses: actions/setup-go@fac708d6674e30b6ba41289acaab6d4b75aa0753
