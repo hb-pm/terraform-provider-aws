@@ -106,7 +106,9 @@ func resourceResourceDataCellsFilterCreate(ctx context.Context, d *schema.Resour
 
 	input := &lakeformation.CreateDataCellsFilterInput{}
 
-	input.TableData = expandDataCellsFilter(d)
+	if v, ok := d.GetOk("data_cells_filter"); ok && len(v.([]interface{})) > 0 && v.([]interface{})[0] != nil {
+		input.TableData = expandDataCellsFilter(v.([]interface{})[0].(map[string]interface{}))
+	}
 
 	err := retry.RetryContext(ctx, IAMPropagationTimeout, func() *retry.RetryError {
 		var err error
@@ -146,7 +148,13 @@ func resourceResourceDataCellsFilterRead(ctx context.Context, d *schema.Resource
 
 	conn := meta.(*conns.AWSClient).LakeFormationConn(ctx)
 
-	apiObject := expandDataCellsFilter(d)
+	var apiObject *lakeformation.DataCellsFilter
+
+	if v, ok := d.GetOk("data_cells_filter"); ok {
+		apiObject = expandDataCellsFilter(v.([]interface{})[0].(map[string]interface{}))
+	}
+
+	//apiObject := expandDataCellsFilter(d)
 	input := &lakeformation.GetDataCellsFilterInput{
 		Name:           apiObject.Name,
 		DatabaseName:   apiObject.DatabaseName,
@@ -168,7 +176,12 @@ func resourceResourceDataCellsFilterDelete(ctx context.Context, d *schema.Resour
 
 	conn := meta.(*conns.AWSClient).LakeFormationConn(ctx)
 
-	apiObject := expandDataCellsFilter(d)
+	var apiObject *lakeformation.DataCellsFilter
+
+	if v, ok := d.GetOk("data_cells_filter"); ok {
+		apiObject = expandDataCellsFilter(v.([]interface{})[0].(map[string]interface{}))
+	}
+
 	input := &lakeformation.DeleteDataCellsFilterInput{
 		Name:           apiObject.Name,
 		DatabaseName:   apiObject.DatabaseName,
@@ -203,33 +216,33 @@ func resourceResourceDataCellsFilterDelete(ctx context.Context, d *schema.Resour
 	return diags
 }
 
-func expandDataCellsFilter(d *schema.ResourceData) *lakeformation.DataCellsFilter {
+func expandDataCellsFilter(tfMap map[string]interface{}) *lakeformation.DataCellsFilter {
 
 	input := &lakeformation.DataCellsFilter{}
 
-	if v, ok := d.GetOk("catalog_id"); ok {
-		input.TableCatalogId = aws.String(v.(string))
+	if v, ok := tfMap["catalog_id"].(string); ok && v != "" {
+		input.TableCatalogId = aws.String(v)
 	}
 
-	if v, ok := d.GetOk("name"); ok {
-		input.Name = aws.String(v.(string))
+	if v, ok := tfMap["name"].(string); ok && v != "" {
+		input.Name = aws.String(v)
 	}
 
-	if v, ok := d.GetOk("database_name"); ok {
-		input.DatabaseName = aws.String(v.(string))
+	if v, ok := tfMap["database_name"].(string); ok && v != "" {
+		input.DatabaseName = aws.String(v)
 	}
 
-	if v, ok := d.GetOk("table_name"); ok {
-		input.TableName = aws.String(v.(string))
+	if v, ok := tfMap["table_name"].(string); ok && v != "" {
+		input.TableName = aws.String(v)
 	}
 
-	if v, ok := d.GetOk("filter_expression"); ok {
+	if v, ok := tfMap["filter_expression"].(string); ok && v != "" {
 		input.RowFilter = &lakeformation.RowFilter{
-			FilterExpression: aws.String(v.(string)),
+			FilterExpression: aws.String(v),
 		}
 	}
 
-	if v, ok := d.GetOk("excluded_column_names"); ok {
+	if v, ok := tfMap["excluded_column_names"]; ok {
 		if v, ok := v.(*schema.Set); ok && v.Len() > 0 {
 			input.ColumnWildcard = &lakeformation.ColumnWildcard{
 				ExcludedColumnNames: flex.ExpandStringSet(v),
