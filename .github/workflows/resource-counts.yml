@@ -8,7 +8,7 @@ permissions:
   pull-requests: write
 jobs:
   coverage:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Generate Token
         id: generate_token

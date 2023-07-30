@@ -18,10 +18,10 @@ jobs:
 
   NotificationPRMerged:
     if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Notification PR Merged
-        uses: slackapi/slack-github-action@e28cf165c92ffef168d23c5c9000cffc8a25e117
+        uses: slackapi/slack-github-action@e28cf165c92ffef168d23c5c9000cffc8a25e117 # v1.24.0
         with:
           payload: |
             {
@@ -38,10 +38,10 @@ jobs:
 
   NotificationMaintainerPROpened:
     needs: community_check
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Notification Maintainer PR Opened
-        uses: slackapi/slack-github-action@e28cf165c92ffef168d23c5c9000cffc8a25e117
+        uses: slackapi/slack-github-action@e28cf165c92ffef168d23c5c9000cffc8a25e117 # v1.24.0
         if: github.event.action == 'opened' && needs.community_check.outputs.maintainer == 'true' && github.actor != 'dependabot[bot]'
         with:
           payload: |
@@ -59,10 +59,10 @@ jobs:
 
   NotificationPartnerPROpened:
     needs: community_check
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Notification Partner PR Opened
-        uses: slackapi/slack-github-action@e28cf165c92ffef168d23c5c9000cffc8a25e117
+        uses: slackapi/slack-github-action@e28cf165c92ffef168d23c5c9000cffc8a25e117 # v1.24.0
         if: github.event.action == 'opened' && needs.community_check.outputs.partner == 'true'
         with:
           payload: |

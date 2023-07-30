@@ -23,7 +23,7 @@ jobs:
   automation_labeler:
     name: 'Automation Labeler'
     needs: community_check
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       GH_TOKEN: ${{ github.token }}
       ISSUE_URL: ${{ github.event.issue.html_url }}
@@ -47,10 +47,10 @@ jobs:
   service_labeler:
     name: 'Service Labeler'
     if: contains(fromJSON('["opened", "edited"]'), github.event.action)
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: 'Apply Labels'
-        uses: github/issue-labeler@e24a3eb6b2e28c8904d086302a2b760647f5f45c # v3.1
+        uses: github/issue-labeler@98b5412841f6c4b0b3d9c29d53c13fad16bd7de2 # v3.2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           configuration-path: .github/labeler-issue-triage.yml
@@ -59,7 +59,7 @@ jobs:
 
   add_to_project:
     name: 'Add to Project'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: community_check
     env:
       GH_TOKEN: ${{ secrets.PROJECT_SCOPED_TOKEN }}
@@ -98,10 +98,10 @@ jobs:
   community_note:
     name: 'Add Community Note'
     if: github.event.action == 'opened'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: 'Add community note to new Issues'
-        uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa
+        uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa # v3.0.2
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |

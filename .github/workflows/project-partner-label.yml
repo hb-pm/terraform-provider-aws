@@ -9,7 +9,7 @@ env:
 jobs:
   tag-created:
     if: ${{ github.event.label.name == 'partner' }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: AddIssueToPartnerBoard
         run: |
