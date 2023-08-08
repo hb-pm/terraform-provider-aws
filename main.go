@@ -33,7 +33,7 @@ func main() {
 	log.SetFlags(logFlags)
 
 	err = tf5server.Serve(
-		"registry.terraform.io/hashicorp/aws",
+		"local/hashicorp/aws",
 		serverFactory,
 		serveOpts...,
 	)
