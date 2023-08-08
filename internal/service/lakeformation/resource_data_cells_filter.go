@@ -52,7 +52,6 @@ func ResourceDataCellsFilter() *schema.Resource {
 				Computed: true,
 				ForceNew: true,
 				MaxItems: 1,
-				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"catalog_id": {
