@@ -49,9 +49,9 @@ func ResourceDataCellsFilter() *schema.Resource {
 			},
 			"data_cells_filter": {
 				Type:     schema.TypeList,
-				Computed: true,
 				ForceNew: true,
 				MaxItems: 1,
+				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"catalog_id": {
